@@ -1,4 +1,4 @@
-<div style="width:96%">
+<div>
 <div class="col-12 grid-margin">
 	<div class="card">
 		<div class="card-body">
@@ -13,9 +13,9 @@
 							<th>Tweet Text</th>
 							<th>Tweet ID</th>
 							<th>Location</th>
-							<th>Tweet</th>
-							<th>Like</th>
-							<th>Retweet</th>
+							<th>Action</th>
+							<!--<th>Like</th>-->
+							<!--<th>Retweet</th>-->
 						</tr>
 						</thead>
 						<tbody>
@@ -26,14 +26,15 @@
 							<td>{{ tweet.tweettext }}</td>
 							<td>{{ tweet.tweetid }}</td>
 							<td>{{ tweet.location }}</td>
-							<td>
-								<button ng-click="tweets.getName(tweet)" type="button" class="btn btn-primary">Tweet</button>
-							</td>
-							<td>
-								<button type="button" class="btn btn-warning" ng-click="tweets.likeTweet(tweet.tweetid)">Like</button>
-							</td>
-							<td>
-								<button type="button" class="btn btn-success" ng-click="tweets.reTweet(tweet.tweetid);">Retweet</button>
+							<td width="150px">
+								<a href="#" ng-model="collapsed" ng-click="collapsed=!collapsed" class="btn btn-light btn-fw">
+									<span   ng-class="{'mdi mdi-minus': collapsed, 'mdi mdi-plus': !collapsed }"></span>
+								</a>
+								<div ng-show="collapsed">
+									<button ng-click="tweets.getName(tweet)" type="button" class="btn-primary btn-sm btn btn-fw" style="margin-bottom: 2px;"><i class="mdi mdi-twitter"></i>Tweet</button><br>
+									<button type="button" class="btn-success btn-sm btn btn-fw" ng-click="tweets.likeTweet(tweet.tweetid)" style="margin-bottom: 2px;"><i class="mdi mdi-thumb-up"></i>Like</button><br>
+									<button type="button" class="btn-dark  btn-sm btn btn-fw" ng-click="tweets.reTweet(tweet.tweetid);" style="margin-bottom: 2px;"><i class="mdi mdi-replay"></i>Retweet</button>
+								</div>
 							</td>
 						</tr>
 						</tbody>
