@@ -9,7 +9,10 @@ var app = angular.module('appRoutes', ['ngRoute'])
 	})
 
 	.when('/about', {
-		templateUrl: 'app/views/pages/about.html'
+		templateUrl: 'app/views/pages/about.html',
+		controller: 'tweetlocation',
+		controllerAs: 'location',
+		authenticated: true
 	})
 
 	.when('/register',{

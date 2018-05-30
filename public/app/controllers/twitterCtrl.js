@@ -1,4 +1,4 @@
-angular.module('twitterController', ['twitterServices', 'chart.js'])
+angular.module('twitterController', ['twitterServices', 'chart.js','googlechart'])
 
 .controller('twitterCtrl', function (Tweet, $scope){
 	var app = this;
@@ -19,7 +19,7 @@ angular.module('twitterController', ['twitterServices', 'chart.js'])
 		if(data.data.success) {
 
 			$scope.labels = ["Total Tweets"];
-			
+
 			$scope.data = [];
 			$scope.data.push(data.data.count);
 			$scope.totalcount = data.data.count;
@@ -209,4 +209,54 @@ angular.module('twitterController', ['twitterServices', 'chart.js'])
 			}		
 		});
 	};
+})
+
+
+.controller('tweetlocation', function (Tweet, $scope){
+
+	Tweet.getTweets().then(function (data) {
+		if (data.data.success) {
+			data = data.data.tweets;
+
+			console.log(data);
+			$scope.mvalue = [];
+			for(var i = 0; i < data.length; i++) {
+
+				$scope.mvalue.push(data[i].location);
+			}
+			var chart1 = {};
+			chart1.type = "GeoChart";
+			chart1.data = [
+				['Locale', 'Count', 'Percent'],
+				['Scotland', 22, 23],
+				['United States', 34, 11],
+				['Brazil', 42, 11],
+				['Canada', 57, 32],
+				['France', 6, 9],
+				['RU', 72, 3]
+			];
+
+			chart1.options = {
+				width: 600,
+				height: 300,
+				chartArea: {left:10,top:10,bottom:0,height:"100%"},
+				colorAxis: {colors: ['#aec7e8', '#1f77b4']},
+				displayMode: 'markers'
+			};
+
+			chart1.formatters = {
+				number : [{
+					columnNum: 1,
+					pattern: "$ #,##0.00"
+				}]
+			};
+
+			$scope.chart = chart1;
+			app.tweetsData = data.data.tweets;
+		} else {
+			data.errorMsg = 'No Tweets Found';
+		}
+	});
+
+
 });
